@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerForge | Your Professional Pathway</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a more corporate look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        .nav-link.active { background-color: #4f46e5; color: white; }
+        .quiz-option.selected {
+            border-color: #6366f1;
+            background-color: #312e81;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+        .bookmark-icon { transition: color 0.2s, transform 0.2s; }
+        .result-tab-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            color: #d1d5db;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .result-tab-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-300">
+
+    <!-- =================================== -->
+    <!--  LOGIN & REGISTER PAGE CONTAINER  -->
+    <!-- =================================== -->
+    <div id="auth-page" class="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-4">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-white">Career<span class="text-indigo-500">Forge</span></h1>
+                <p class="text-gray-400 mt-2">Shape Your Professional Future.</p>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-container" class="bg-gray-800 p-8 rounded-xl shadow-2xl">
+                <h2 class="text-2xl font-semibold text-center text-white mb-6">Welcome Back</h2>
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+                        <input type="email" id="login-email" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-sm font-medium text-gray-400 mb-2">Password</label>
+                        <input type="password" id="login-password" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                    <p id="login-error" class="text-red-400 text-sm text-center mb-4 hidden"></p>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">Login</button>
+                </form>
+                <p class="text-center text-gray-400 text-sm mt-6">
+                    Don't have an account? <a href="#" id="show-register" class="font-medium text-indigo-400 hover:text-indigo-300">Register here</a>
+                </p>
+            </div>
+
+            <!-- Registration Form (hidden by default) -->
+            <div id="register-container" class="bg-gray-800 p-8 rounded-xl shadow-2xl hidden">
+                <h2 class="text-2xl font-semibold text-center text-white mb-6">Create Your Account</h2>
+                <form id="register-form">
+                     <div class="mb-4">
+                        <label for="register-name" class="block text-sm font-medium text-gray-400 mb-2">Full Name</label>
+                        <input type="text" id="register-name" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="register-email" class="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
+                        <input type="email" id="register-email" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label for="register-password" class="block text-sm font-medium text-gray-400 mb-2">Password</label>
+                        <input type="password" id="register-password" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    </div>
+                    <p id="register-error" class="text-red-400 text-sm text-center mb-4 hidden"></p>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">Register</button>
+                </form>
+                <p class="text-center text-gray-400 text-sm mt-6">
+                    Already have an account? <a href="#" id="show-login" class="font-medium text-indigo-400 hover:text-indigo-300">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================== -->
+    <!--  MAIN APP CONTAINER    -->
+    <!-- ======================== -->
+    <div id="main-app" class="hidden min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-gray-800/80 backdrop-blur-md shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white">Career<span class="text-indigo-500">Forge</span></h1>
+                
+                <nav class="hidden md:flex items-center space-x-1 bg-gray-900/50 p-1 rounded-full">
+                    <a href="#home" class="nav-link px-3 py-2 text-sm font-medium rounded-full transition">Home</a>
+                    <a href="#quiz" class="nav-link px-3 py-2 text-sm font-medium rounded-full transition">Quiz</a>
+                    <a href="#careers" class="nav-link px-3 py-2 text-sm font-medium rounded-full transition">Career Paths</a>
+                    <a href="#colleges" class="nav-link px-3 py-2 text-sm font-medium rounded-full transition">Colleges</a>
+                    <a href="#internships" class="nav-link px-3 py-2 text-sm font-medium rounded-full transition">Internships</a>
+                    <a href="#jobs" class="nav-link px-3 py-2 text-sm font-medium rounded-full transition">Jobs</a>
+                    <a href="#scholarships" class="nav-link px-3 py-2 text-sm font-medium rounded-full transition">Scholarships</a>
+                </nav>
+
+                <div class="flex items-center space-x-4">
+                    <button id="bookmarks-btn" class="text-gray-400 hover:text-white transition" title="My Bookmarks">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                    </button>
+                    <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-4 py-2 rounded-full transition">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main id="app-content" class="container mx-auto p-6 flex-grow">
+            <!-- Dynamic Content Will Be Rendered Here -->
+        </main>
+    </div>
+
+    <script type="module">
+        // --- [ START ] MOCK DATABASE & CONFIG ---
+
+        const quizQuestions = [ { question: "Which of these activities energizes you the most?", options: [ { text: "Building something tangible with your hands or tools.", tags: ["technical", "practical"] }, { text: "Solving complex logic puzzles or mathematical problems.", tags: ["analytical", "tech"] }, { text: "Expressing ideas through writing, art, or performance.", tags: ["creative", "communication"] }, { text: "Helping and caring for people or animals.", tags: ["healthcare", "social"] }, { text: "Organizing teams, planning projects, and leading.", tags: ["management", "business"] } ] }, { question: "When faced with a major project, what's your first instinct?", options: [ { text: "Break it down into a logical, step-by-step plan.", tags: ["analytical", "management"] }, { text: "Research everything about the topic to become an expert.", tags: ["analytical", "research"] }, { text: "Think of a unique, out-of-the-box way to approach it.", tags: ["creative", "innovation"] }, { text: "Understand how it will impact people and the community.", tags: ["social", "communication"] }, { text: "Start experimenting with different tools and methods right away.", tags: ["practical", "technical"] } ] }, { question: "What kind of work environment do you thrive in?", options: [ { text: "A fast-paced, collaborative office with a clear mission.", tags: ["management", "business"] }, { text: "A quiet, focused space where you can do deep, analytical work.", tags: ["analytical", "research", "tech"] }, { text: "A dynamic, creative studio or workshop.", tags: ["creative", "practical"] }, { text: "On the front lines, directly interacting with and helping people.", tags: ["healthcare", "social"] }, { text: "A flexible environment, possibly working remotely.", tags: ["tech", "creative", "communication"] } ] }, { question: "Which school subject did you find most engaging?", options: [ { text: "Physics or Computer Science", tags: ["tech", "analytical", "technical"] }, { text: "Biology or Chemistry", tags: ["healthcare", "research", "analytical"] }, { text: "Literature, History, or Arts", tags: ["creative", "communication", "social"] }, { text: "Economics or Business Studies", tags: ["business", "finance", "management"] }, { text: "Mathematics", tags: ["analytical", "finance", "tech"] } ] }, { question: "How do you prefer to solve problems?", options: [ { text: "With data and evidence-based reasoning.", tags: ["analytical", "research"] }, { text: "Through creative brainstorming and new ideas.", tags: ["creative", "innovation"] }, { text: "By talking it through with others and building consensus.", tags: ["communication", "social"] }, { text: "With hands-on trial and error.", tags: ["practical", "technical"] }, { text: "By creating an efficient system or process.", tags: ["management", "business"] } ] } ];
+        const careersData = [ { id: 'car01', title: 'Software Developer', tags: ['tech', 'analytical'], description: 'Design, develop, and maintain software applications for computers and mobile devices.' }, { id: 'car02', title: 'Data Scientist', tags: ['analytical', 'tech', 'research'], description: 'Analyze large, complex data sets to identify trends and make predictions.' }, { id: 'car03', title: 'UX/UI Designer', tags: ['creative', 'tech', 'communication'], description: 'Design user-friendly interfaces for websites and applications to enhance user satisfaction.' }, { id: 'car04', title: 'Registered Nurse', tags: ['healthcare', 'social', 'practical'], description: 'Provide and coordinate patient care, educate patients about health conditions.' }, { id: 'car05', title: 'Marketing Manager', tags: ['management', 'creative', 'business'], description: 'Plan and execute marketing campaigns to promote a company’s products or services.' }, { id: 'car06', title: 'Financial Analyst', tags: ['finance', 'analytical', 'business'], description: 'Provide guidance to businesses and individuals making investment decisions.' }, { id: 'car07', title: 'Civil Engineer', tags: ['technical', 'analytical', 'practical'], description: 'Design, build, and supervise infrastructure projects, including roads, buildings, and dams.' }, { id: 'car08', title: 'Graphic Designer', tags: ['creative'], description: 'Create visual concepts to communicate ideas that inspire, inform, or captivate consumers.' }, { id: 'car09', title: 'Physician', tags: ['healthcare', 'research', 'analytical'], description: 'Diagnose and treat injuries or illnesses, and address health maintenance.' }, { id: 'car10', title: 'Project Manager', tags: ['management', 'communication', 'business'], description: 'Responsible for the planning, procurement and execution of a project, in any undertaking.' }, { id: 'car11', title: 'Content Writer/Strategist', tags: ['creative', 'communication'], description: 'Create engaging content for websites, blogs, and social media to attract a target audience.' }, { id: 'car12', title: 'Social Worker', tags: ['social', 'communication'], description: 'Help people cope with challenges in their lives, from poverty to abuse and addiction.'} ];
+        const jobsData = [ { id: 'job01', title: 'Frontend Developer', company: 'Innovate Solutions', location: 'Remote', salary: '₹8 - 12 LPA', type: 'Full-time', tags: ['tech', 'analytical'] }, { id: 'job02', title: 'Product Manager', company: 'TechCorp', location: 'Mumbai', salary: '₹15 - 25 LPA', type: 'Full-time', tags: ['management', 'business'] }, { id: 'job03', title: 'Investment Banking Analyst', company: 'Capital Group', location: 'Delhi', salary: '₹12 - 20 LPA', type: 'Full-time', tags: ['finance', 'analytical'] }, { id: 'job04', title: 'Senior Nurse', company: 'Apollo Hospitals', location: 'Chennai', salary: '₹5 - 8 LPA', type: 'Full-time', tags: ['healthcare', 'social'] }, { id: 'job05', title: 'Lead Civil Engineer', company: 'L&T Construction', location: 'Bangalore', salary: '₹10 - 18 LPA', type: 'Full-time', tags: ['technical', 'analytical'] }, { id: 'job06', title: 'Brand Strategist', company: 'Ogilvy', location: 'Remote', salary: '₹9 - 15 LPA', type: 'Full-time', tags: ['creative', 'communication'] }, { id: 'job07', title: 'AI Research Scientist', company: 'Google AI', location: 'Bangalore', salary: '₹25 - 40 LPA', type: 'Full-time', tags: ['research', 'tech'] }, { id: 'job08', title: 'Lead UX Designer', company: 'DesignCo', location: 'Remote', salary: '₹14 - 22 LPA', type: 'Full-time', tags: ['creative', 'tech'] }, { id: 'job09', title: 'Clinical Psychologist', company: 'MindCare Clinic', location: 'Delhi', salary: '₹6 - 10 LPA', type: 'Part-time', tags: ['healthcare', 'social'] }, { id: 'job10', title: 'IT Project Coordinator', company: 'Wipro', location: 'Pune', salary: '₹6 - 9 LPA', type: 'Full-time', tags: ['management', 'tech'] } ];
+        const internshipsData = [ { id: 'int01', title: 'Web Development Intern', company: 'StartupHub', location: 'Remote', duration: '3 Months', stipend: '₹15,000/month', tags: ['tech', 'practical'] }, { id: 'int02', title: 'Digital Marketing Intern', company: 'GrowthX', location: 'Remote', duration: '6 Months', stipend: '₹10,000/month', tags: ['creative', 'business'] }, { id: 'int03', title: 'Finance Intern', company: 'Finvest', location: 'Mumbai', duration: '4 Months', stipend: '₹20,000/month', tags: ['finance', 'analytical'] }, { id: 'int04', title: 'Nursing Assistant Intern', company: 'City Hospital', location: 'Delhi', duration: '6 Months', stipend: 'Unpaid', tags: ['healthcare', 'practical'] }, { id: 'int05', title: 'Content Creation Intern', company: 'MediaWire', location: 'Remote', duration: '3 Months', stipend: '₹12,000/month', tags: ['creative', 'communication'] }, { id: 'int06', title: 'Data Analytics Intern', company: 'DataWeave', location: 'Bangalore', duration: '6 Months', stipend: '₹25,000/month', tags: ['analytical', 'tech'] }, { id: 'int07', title: 'HR Management Intern', company: 'PeopleFirst HR', location: 'Pune', duration: '3 Months', stipend: '₹8,000/month', tags: ['management', 'social'] }, { id: 'int08', title: 'Structural Engineering Intern', company: 'InfraBuilders', location: 'Delhi', duration: '6 Months', stipend: '₹18,000/month', tags: ['technical', 'analytical'] } ];
+        const collegesData = [ { id: 'col01', name: 'IIT Bombay', location: 'Mumbai', stream: 'Engineering', course: 'B.Tech', fees: '2.2 Lakhs/year', exam: 'JEE Advanced' }, { id: 'col02', name: 'AIIMS Delhi', location: 'Delhi', stream: 'Medical', course: 'MBBS', fees: '6,000/year', exam: 'NEET' }, { id: 'col03', name: 'IIM Ahmedabad', location: 'Ahmedabad', stream: 'Management', course: 'MBA', fees: '25 Lakhs (Total)', exam: 'CAT' }, { id: 'col04', name: 'National Institute of Design', location: 'Ahmedabad', stream: 'Design', course: 'B.Des', fees: '3.5 Lakhs/year', exam: 'NID DAT' }, { id: 'col05', name: 'SRCC, Delhi University', location: 'Delhi', stream: 'Commerce', course: 'B.Com (Hons)', fees: '30,000/year', exam: 'CUET' }, { id: 'col06', name: 'St. Stephen\'s College, DU', location: 'Delhi', stream: 'Arts', course: 'B.A. (Hons) History', fees: '42,000/year', exam: 'CUET' }, { id: 'col07', name: 'NIT Trichy', location: 'Tiruchirappalli', stream: 'Engineering', course: 'B.Tech CSE', fees: '1.4 Lakhs/year', exam: 'JEE Main' }, { id: 'col08', name: 'Christian Medical College', location: 'Vellore', stream: 'Medical', course: 'MBBS', fees: '50,000/year', exam: 'NEET' } ];
+        const scholarshipsData = [ { id: 'sch01', title: 'Kishore Vaigyanik Protsahan Yojana (KVPY)', eligibility: 'Class 11/12 (Science)', category: 'Merit-based', amount: 'Up to ₹7,000/month + Grant' }, { id: 'sch02', title: 'PM\'s Scholarship Scheme for Central Armed Police Forces', eligibility: 'Wards of CAPF/Assam Rifles Personnel', category: 'Need-based', amount: '₹3,000/month (Girls), ₹2,500/month (Boys)'}, { id: 'sch03', title: 'HDFC Bank Educational Crisis Scholarship', eligibility: 'Students facing personal/economic crisis', category: 'Need-based', amount: 'Up to ₹75,000' }, { id: 'sch04', title: 'Reliance Foundation Undergraduate Scholarships', eligibility: 'Any 1st year UG student', category: 'Merit-based', amount: 'Up to ₹2,00,000' }, { id: 'sch05', title: 'Tata Trusts Medical and Healthcare Scholarships', eligibility: 'UG/PG in Medical Sciences', category: 'Merit-based', amount: 'Varies based on course fees' }, { id: 'sch06', title: 'INSPIRE Scholarship for Higher Education', eligibility: 'Top 1% in 12th board exams (Science)', category: 'Merit-based', amount: '₹80,000 per year' }, { id: 'sch07', title: 'Post-Matric Scholarship for Students with Disabilities', eligibility: 'Students with 40%+ disability', category: 'Need-based', amount: 'Maintenance and academic allowance' } ];
+        // --- [ END ] MOCK DATABASE & CONFIG ---
+
+        // --- [ START ] STATE MANAGEMENT ---
+        const appState = { currentUser: null, currentPage: 'home', bookmarks: [], lastQuizResults: null };
+        // --- [ END ] STATE MANAGEMENT ---
+        
+        // --- [ START ] CORE APP LOGIC & ROUTING ---
+        const authPage = document.getElementById('auth-page');
+        const mainApp = document.getElementById('main-app');
+        const appContent = document.getElementById('app-content');
+
+        function navigate(page, data = null) {
+            appState.currentPage = page;
+            window.location.hash = page;
+            // The line below was causing the error and has been removed.
+            // window.history.replaceState({data}, null, window.location.pathname + window.location.hash);
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link.hash === `#${page}`);
+            });
+            
+            switch (page) {
+                case 'home': renderHomePage(); break;
+                case 'quiz': renderQuizPage(); break;
+                case 'results':
+                    if (data) {
+                        appState.lastQuizResults = data;
+                    }
+                    renderResultsPage(appState.lastQuizResults);
+                    break;
+                case 'careers': renderCareersPage(); break;
+                case 'colleges': renderCollegesPage(); break;
+                case 'internships': renderInternshipsPage(); break;
+                case 'jobs': renderJobsPage(); break;
+                case 'scholarships': renderScholarshipsPage(); break;
+                case 'bookmarks': renderBookmarksPage(); break;
+                default: renderHomePage(); break;
+            }
+        }
+        
+        // --- [ END ] CORE APP LOGIC & ROUTING ---
+        
+        // --- [ START ] AUTHENTICATION ---
+        const loginContainer = document.getElementById('login-container');
+        const registerContainer = document.getElementById('register-container');
+        const showRegisterBtn = document.getElementById('show-register');
+        const showLoginBtn = document.getElementById('show-login');
+        showRegisterBtn.addEventListener('click', (e) => { e.preventDefault(); loginContainer.classList.add('hidden'); registerContainer.classList.remove('hidden'); });
+        showLoginBtn.addEventListener('click', (e) => { e.preventDefault(); registerContainer.classList.add('hidden'); loginContainer.classList.remove('hidden'); });
+
+        function checkAuth() {
+            const loggedInUserEmail = localStorage.getItem('loggedInUser');
+            if (loggedInUserEmail) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                appState.currentUser = users.find(user => user.email === loggedInUserEmail);
+                if (appState.currentUser) {
+                    loadBookmarks();
+                    authPage.style.display = 'none';
+                    mainApp.style.display = 'flex';
+                    const page = window.location.hash.substring(1) || 'home';
+                    navigate(page);
+                }
+            } else {
+                authPage.style.display = 'flex';
+                mainApp.style.display = 'none';
+            }
+        }
+
+        document.getElementById('login-form').addEventListener('submit', (e) => { e.preventDefault(); const email = document.getElementById('login-email').value; const password = document.getElementById('login-password').value; const users = JSON.parse(localStorage.getItem('users')) || []; const user = users.find(u => u.email === email && u.password === password); const errorEl = document.getElementById('login-error'); if (user) { localStorage.setItem('loggedInUser', email); errorEl.classList.add('hidden'); checkAuth(); } else { errorEl.textContent = 'Invalid email or password.'; errorEl.classList.remove('hidden'); } });
+        document.getElementById('register-form').addEventListener('submit', (e) => { e.preventDefault(); const name = document.getElementById('register-name').value; const email = document.getElementById('register-email').value; const password = document.getElementById('register-password').value; const users = JSON.parse(localStorage.getItem('users')) || []; const errorEl = document.getElementById('register-error'); if (users.some(u => u.email === email)) { errorEl.textContent = 'An account with this email already exists.'; errorEl.classList.remove('hidden'); return; } users.push({ name, email, password, bookmarks: [] }); localStorage.setItem('users', JSON.stringify(users)); localStorage.setItem('loggedInUser', email); errorEl.classList.add('hidden'); checkAuth(); });
+        document.getElementById('logout-btn').addEventListener('click', () => { localStorage.removeItem('loggedInUser'); appState.currentUser = null; appState.bookmarks = []; window.location.hash = ''; checkAuth(); });
+        // --- [ END ] AUTHENTICATION ---
+
+        // --- [ START ] BOOKMARK SYSTEM ---
+        function loadBookmarks() { appState.bookmarks = appState.currentUser.bookmarks || []; }
+        function saveBookmarks() { if (!appState.currentUser) return; const users = JSON.parse(localStorage.getItem('users')) || []; const userIndex = users.findIndex(u => u.email === appState.currentUser.email); if (userIndex !== -1) { users[userIndex].bookmarks = appState.bookmarks; localStorage.setItem('users', JSON.stringify(users)); appState.currentUser.bookmarks = appState.bookmarks; } }
+        function toggleBookmark(itemId, itemType) { const bookmarkId = `${itemType}-${itemId}`; const bookmarkIndex = appState.bookmarks.findIndex(b => b.id === bookmarkId); if (bookmarkIndex > -1) { appState.bookmarks.splice(bookmarkIndex, 1); } else { const dataMap = { career: careersData, job: jobsData, internship: internshipsData, college: collegesData, scholarship: scholarshipsData }; const itemData = dataMap[itemType].find(item => item.id === itemId); if (itemData) { appState.bookmarks.push({ id: bookmarkId, type: itemType, data: itemData }); } } saveBookmarks(); navigate(appState.currentPage); }
+        function isBookmarked(itemId, itemType) { return appState.bookmarks.some(b => b.id === `${itemType}-${itemId}`); }
+        // --- [ END ] BOOKMARK SYSTEM ---
+        
+        // --- [ START ] UI RENDERING FUNCTIONS ---
+        function createCard(item, type) { const bookmarked = isBookmarked(item.id, type); let detailsHtml = ''; switch(type) { case 'career': detailsHtml = `<p class="text-gray-400 text-sm mt-2 flex-grow">${item.description}</p>`; break; case 'job': detailsHtml = `<p class="text-gray-400 font-medium">${item.company}</p><div class="text-sm text-gray-500 mt-2 space-y-1"><p><strong>Location:</strong> ${item.location}</p><p><strong>Salary:</strong> ${item.salary}</p><p><strong>Type:</strong> ${item.type}</p></div>`; break; case 'internship': detailsHtml = `<p class="text-gray-400 font-medium">${item.company}</p><div class="text-sm text-gray-500 mt-2 space-y-1"><p><strong>Location:</strong> ${item.location}</p><p><strong>Duration:</strong> ${item.duration}</p><p><strong>Stipend:</strong> ${item.stipend}</p></div>`; break; case 'college': detailsHtml = `<p class="text-gray-400 font-medium">${item.location}</p><div class="text-sm text-gray-500 mt-2 space-y-1"><p><strong>Stream:</strong> ${item.stream}</p><p><strong>Course:</strong> ${item.course}</p><p><strong>Exam:</strong> ${item.exam}</p></div>`; break; case 'scholarship': detailsHtml = `<div class="text-sm text-gray-500 mt-2 space-y-1"><p><strong>Eligibility:</strong> ${item.eligibility}</p><p><strong>Category:</strong> ${item.category}</p><p><strong>Amount:</strong> ${item.amount}</p></div>`; break; } return `<div class="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col h-full border border-gray-700 hover:border-indigo-500 transition"><div class="flex justify-between items-start"><h3 class="text-xl font-bold text-white flex-1 pr-4">${item.title || item.name}</h3><button class="bookmark-btn" data-id="${item.id}" data-type="${type}"><svg class="w-6 h-6 bookmark-icon ${bookmarked ? 'text-indigo-500 fill-current' : 'text-gray-500 hover:text-white'}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg></button></div>${detailsHtml}</div>`; }
+        function renderHomePage() { appContent.innerHTML = `<div class="text-center py-20"><p class="text-2xl md:text-3xl text-gray-400 italic">"The only way to do great work is to love what you do."</p><p class="text-lg font-semibold text-white mt-2">- Steve Jobs</p><div class="mt-16 max-w-4xl mx-auto"><h2 class="text-3xl font-bold text-white mb-4">Welcome to Your Career Dashboard, ${appState.currentUser.name}</h2><p class="text-lg text-gray-400 mb-8">This is your starting point to explore opportunities. Begin by taking the quiz to get personalized recommendations, or explore careers and colleges at your own pace.</p><button id="start-quiz-from-home" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">Take the Career Quiz</button></div></div>`; document.getElementById('start-quiz-from-home').addEventListener('click', () => navigate('quiz')); }
+        function renderQuizPage() { let currentQuestionIndex = 0; const userScores = {}; function renderQuestion() { const question = quizQuestions[currentQuestionIndex]; const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100; appContent.innerHTML = `<div class="max-w-4xl mx-auto"><div class="mb-4"><p class="text-indigo-400 font-semibold">Question ${currentQuestionIndex + 1} of ${quizQuestions.length}</p><div class="w-full bg-gray-700 rounded-full h-2.5 mt-2"><div class="bg-indigo-600 h-2.5 rounded-full" style="width: ${progress}%"></div></div></div><h2 class="text-3xl font-bold text-white mb-8">${question.question}</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4">${question.options.map((opt, index) => `<button class="quiz-option text-left p-6 bg-gray-800 rounded-lg border-2 border-gray-700 hover:border-indigo-500 transition" data-option-index="${index}">${opt.text}</button>`).join('')}</div></div>`; appContent.querySelectorAll('.quiz-option').forEach(button => { button.addEventListener('click', (e) => { const selectedIndex = e.currentTarget.getAttribute('data-option-index'); const selectedOption = question.options[selectedIndex]; selectedOption.tags.forEach(tag => { userScores[tag] = (userScores[tag] || 0) + 1; }); currentQuestionIndex++; if (currentQuestionIndex < quizQuestions.length) { renderQuestion(); } else { finishQuiz(); } }); }); } function finishQuiz() { const sortedTags = Object.entries(userScores).sort((a, b) => b[1] - a[1]); const topTags = sortedTags.slice(0, 3).map(item => item[0]); const getMatches = (data, limit) => data.filter(item => item.tags && item.tags.some(tag => topTags.includes(tag))).slice(0, limit); const results = { careers: getMatches(careersData, 7), jobs: getMatches(jobsData, 7), internships: getMatches(internshipsData, 7) }; navigate('results', results); } renderQuestion(); }
+        function renderResultsPage(results) { if(!results){ navigate('quiz'); return; } appContent.innerHTML = `<div class="text-center mb-10"><h2 class="text-4xl font-bold text-white">Your Personalized Recommendations</h2><p class="text-gray-400 mt-2">Based on your quiz answers, here are some paths you might excel in.</p></div><div id="results-tabs" class="flex justify-center space-x-2 bg-gray-800 p-2 rounded-full max-w-lg mx-auto mb-8"><button class="result-tab-btn active w-full" data-tab="careers">Careers</button><button class="result-tab-btn w-full" data-tab="jobs">Jobs</button><button class="result-tab-btn w-full" data-tab="internships">Internships</button></div><div id="results-content"></div>`; const tabButtons = appContent.querySelectorAll('.result-tab-btn'); const resultsContent = appContent.querySelector('#results-content'); function renderTabContent(tabName) { tabButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabName)); let contentData, cardType; switch (tabName) { case 'careers': contentData = results.careers; cardType = 'career'; break; case 'jobs': contentData = results.jobs; cardType = 'job'; break; case 'internships': contentData = results.internships; cardType = 'internship'; break; } if (contentData && contentData.length) { resultsContent.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${contentData.map(item => createCard(item, cardType)).join('')}</div>`; } else { resultsContent.innerHTML = `<p class="text-center text-gray-400">No recommendations found for this category.</p>`; } } tabButtons.forEach(btn => { btn.addEventListener('click', () => renderTabContent(btn.dataset.tab)); }); renderTabContent('careers'); }
+        function renderGenericPage(pageTitle, data, type, filtersConfig = null) { let filtersHTML = ''; if (filtersConfig) { filtersHTML = `<div class="bg-gray-800 p-4 rounded-lg mb-8 flex flex-wrap gap-4 items-center">${filtersConfig.map(filter => { if (filter.type === 'search') { return `<input type="text" id="${filter.id}" placeholder="${filter.placeholder}" class="flex-grow bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">`; } if (filter.type === 'select') { return `<select id="${filter.id}" class="bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">All ${filter.label}</option>${filter.options.map(opt => `<option value="${opt.value}">${opt.text}</option>`).join('')}</select>`; } return ''; }).join('')}<button id="reset-filters" class="bg-gray-600 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-lg">Reset</button></div>`; } appContent.innerHTML = `<div class="mb-8"><h2 class="text-4xl font-bold text-white">${pageTitle}</h2></div>${filtersHTML}<div id="item-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${data.map(item => createCard(item, type)).join('')}</div>`; if (filtersConfig) { const filterControls = filtersConfig.map(f => document.getElementById(f.id)); const grid = document.getElementById('item-grid'); const resetBtn = document.getElementById('reset-filters'); const applyFilters = () => { let filteredData = [...data]; filtersConfig.forEach(filter => { const control = document.getElementById(filter.id); const value = control.value.toLowerCase(); if (value) { filteredData = filteredData.filter(item => { if (filter.type === 'search') { return (item.title || item.name).toLowerCase().includes(value); } if (filter.type === 'select') { return item[filter.key] && item[filter.key].toLowerCase() === value; } return true; }); } }); grid.innerHTML = filteredData.map(item => createCard(item, type)).join('') || `<p class="text-center text-gray-400 col-span-full">No items match your criteria.</p>`; }; filterControls.forEach(control => control.addEventListener('input', applyFilters)); resetBtn.addEventListener('click', () => { filterControls.forEach(control => control.value = ''); applyFilters(); }); } }
+        function renderCareersPage() { renderGenericPage('Explore Career Paths', careersData, 'career'); }
+        function renderInternshipsPage() { const filters = [ { id: 'internship-search', type: 'search', placeholder: 'Search internships...' }, { id: 'internship-location', type: 'select', label: 'Locations', key: 'location', options: [...new Set(internshipsData.map(i => i.location))].map(l => ({value: l.toLowerCase(), text: l})) } ]; renderGenericPage('Internship Opportunities', internshipsData, 'internship', filters); }
+        function renderJobsPage() { const filters = [ { id: 'job-search', type: 'search', placeholder: 'Search jobs...' }, { id: 'job-location', type: 'select', label: 'Locations', key: 'location', options: [...new Set(jobsData.map(j => j.location))].map(l => ({value: l.toLowerCase(), text: l})) }, { id: 'job-type', type: 'select', label: 'Types', key: 'type', options: [...new Set(jobsData.map(j => j.type))].map(t => ({value: t.toLowerCase(), text: t})) } ]; renderGenericPage('Job Openings', jobsData, 'job', filters); }
+        function renderCollegesPage() { const filters = [ { id: 'college-search', type: 'search', placeholder: 'Search colleges...' }, { id: 'college-stream', type: 'select', label: 'Streams', key: 'stream', options: [...new Set(collegesData.map(c => c.stream))].map(s => ({value: s.toLowerCase(), text: s})) }, { id: 'college-location', type: 'select', label: 'Locations', key: 'location', options: [...new Set(collegesData.map(c => c.location))].map(l => ({value: l.toLowerCase(), text: l})) }, { id: 'college-exam', type: 'select', label: 'Exams', key: 'exam', options: [...new Set(collegesData.map(c => c.exam))].map(e => ({value: e.toLowerCase(), text: e})) } ]; renderGenericPage('Find Your College', collegesData, 'college', filters); }
+        function renderScholarshipsPage() { const filters = [ { id: 'scholarship-search', type: 'search', placeholder: 'Search scholarships...' }, { id: 'scholarship-eligibility', type: 'select', label: 'Eligibility', key: 'eligibility', options: [...new Set(scholarshipsData.map(s => s.eligibility))].map(e => ({ value: e.toLowerCase(), text: e })) }, { id: 'scholarship-category', type: 'select', label: 'Category', key: 'category', options: [...new Set(scholarshipsData.map(s => s.category))].map(c => ({ value: c.toLowerCase(), text: c })) } ]; renderGenericPage('Scholarship Opportunities', scholarshipsData, 'scholarship', filters); }
+        function renderBookmarksPage() { appContent.innerHTML = `<div class="mb-8"><h2 class="text-4xl font-bold text-white">My Bookmarks</h2></div><div id="bookmarks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${appState.bookmarks.length ? appState.bookmarks.map(bookmark => createCard(bookmark.data, bookmark.type)).join('') : '<p class="text-center text-gray-400 col-span-full">You haven\'t bookmarked anything yet. Start exploring!</p>'}</div>`; }
+        // --- [ END ] UI RENDERING FUNCTIONS ---
+        
+        // --- [ START ] EVENT LISTENERS ---
+        document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const page = e.target.hash.substring(1); navigate(page); }); });
+        document.getElementById('bookmarks-btn').addEventListener('click', () => { navigate('bookmarks'); });
+        appContent.addEventListener('click', (e) => { const button = e.target.closest('.bookmark-btn'); if (button) { toggleBookmark(button.dataset.id, button.dataset.type); } });
+        window.addEventListener('popstate', () => { if (appState.currentUser) { const page = window.location.hash.substring(1) || 'home'; navigate(page); } });
+        // --- [ END ] EVENT LISTENERS ---
+        
+        // --- INITIALIZE APP ---
+        checkAuth();
+    </script>
+</body>
+</html>
